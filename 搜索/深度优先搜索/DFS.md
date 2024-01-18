@@ -9,7 +9,7 @@
 
 - 思路
 
-  按照从上到下，从左到右的原则判断该位置是否合法(所在行, 列, 对角线均无棋子), 若合法则占领, 更新占领状态, 否则搜索下一个合法位置. 
+  按照从上到下, 从左到右的原则判断该位置是否合法(所在行, 列, 对角线均无棋子), 若合法则占领, 更新占领状态, 否则搜索下一个合法位置. 
 
 - 参考代码
 
@@ -18,15 +18,15 @@
   using namespace std;
   
   constexpr int MAXN = 100;
-  bool col[MAXN], maindiag[MAXN], antidiag[MAXN];//标记所在列, 主对角线, 副对角线是否已经被占领
-  int n, ans, res[MAXN];//结果存储
+  bool col[MAXN], maindiag[MAXN], antidiag[MAXN]; //标记所在列, 主对角线, 副对角线是否已经被占领
+  int n, ans, res[MAXN]; //结果存储
   
   void dfs(int row)
   {
-      if(row > n)//搜索的行数 > 图的边长, 即搜索结束
+      if(row > n) //搜索的行数 > 图的边长, 即搜索结束
       {
           ans++;
-          if(ans <= 3)//字典序最小的三次输出
+          if(ans <= 3) //字典序最小的三次输出
           {
               for(int i = 1; i <= n; i++)
                   printf("%d ", res[i]);
@@ -38,12 +38,12 @@
       {
           for(int i = 1; i <= n; i++)
           {
-              if(!col[i] && !maindiag[i - row + n] && !antidiag[row + i])//判断是否合法
+              if(!col[i] && !maindiag[i - row + n] && !antidiag[row + i]) //判断是否合法
               {
-                  col[i] = maindiag[i - row + n] = antidiag[row + i] = true;//占领列, 主对角线, 副对角线
-                  res[row] = i;//标记棋子行列位置便于输出
-                  dfs(row + 1);//搜索下一行
-                  col[i] = maindiag[i - row + n] = antidiag[row + i] = false;//状态回溯
+                  col[i] = maindiag[i - row + n] = antidiag[row + i] = true; //占领列, 主对角线, 副对角线
+                  res[row] = i; //标记棋子行列位置便于输出
+                  dfs(row + 1); //搜索下一行
+                  col[i] = maindiag[i - row + n] = antidiag[row + i] = false; //状态回溯
               }
           }
       }
@@ -52,7 +52,7 @@
   int main()
   {
       scanf("%d", &n);
-      dfs(1);//从第一行开始依次搜索
+      dfs(1); //从第一行开始依次搜索
       printf("%d\n", ans);
       return 0;
   }
@@ -73,17 +73,17 @@
   constexpr int MAXN = 100+5;
   char graph[MAXN][MAXN];
   int n, m, ans;
-  int dx[] = {-1, 0, 1, 1, 1, 0, -1, -1};//存储x方向上周围八个位置的坐标
-  int dy[] = {1, 1, 1, 0, -1, -1, -1, 0};//存储y方向上周围八个位置的坐标
+  int dx[] = {-1, 0, 1, 1, 1, 0, -1, -1}; //存储x方向上周围八个位置的坐标
+  int dy[] = {1, 1, 1, 0, -1, -1, -1, 0}; //存储y方向上周围八个位置的坐标
   
   void dfs(int x, int y)
   {
-      graph[x][y] = '.';//更改状态, 避免回溯
+      graph[x][y] = '.'; //更改状态, 避免回溯
       for (int i = 0; i < 8; i++)
       {
           int nx = x + dx[i], ny = y + dy[i];
-          if (0 <= nx && nx < n && 0 <= ny && ny < m && graph[nx][ny] == 'W')//判断周边位置是否合法
-              dfs(nx, ny);//搜索周边位置
+          if (0 <= nx && nx < n && 0 <= ny && ny < m && graph[nx][ny] == 'W') //判断周边位置是否合法
+              dfs(nx, ny); //搜索周边位置
       }
   }
   
@@ -93,11 +93,11 @@
       cin >> n >> m;
       for (int i = 0; i < n; i++)
           for (int j = 0; j < m; j++)
-              cin >> graph[i][j];//读图
+              cin >> graph[i][j]; //读图
       for (int i = 0; i < m; i++)
           for (int j = 0; j < n; j++)
               if (graph[i][j] == 'W')
-                  dfs(i, j), ans++;//依次搜索每个位置
+                  dfs(i, j), ans++; //依次搜索每个位置
       cout << ans << endl;
       return 0;
   }
